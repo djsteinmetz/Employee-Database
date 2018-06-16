@@ -1,3 +1,4 @@
+// Database call
 var config = {
     apiKey: "AIzaSyDULXE3UXv1NcpSs9OvrKoH5Ua-sjv7-qs",
     authDomain: "emplyee-database-801e9.firebaseapp.com",
@@ -19,15 +20,13 @@ $("#add-user").on("click", function(event) {
     employeeStartDate = $("#start-date-input").val().trim();
     employeeMonthlyRate = $("#monthly-rate-input").val().trim();
 
-    // Create new P element to append the information to
-    // var newP = $("<p>");
-    // newP = employeeName;
-    // $("#nameDisplay").append(newP);
+    // Pushing new data to the database
     database.ref().push({
         employeeName : employeeName,
-        emplyoeeRole : employeeRole,
+        employeeRole : employeeRole,
         employeeStartDate :employeeStartDate,
-        employeeMonthlyRate :employeeMonthlyRate
+        employeeMonthlyRate :employeeMonthlyRate,
+        dataAdded: firebase.database.ServerValue.TIMESTAMP
     });
 
 
@@ -38,10 +37,15 @@ $("#add-user").on("click", function(event) {
     // $(".form-control").empty();
 });
 
-database.ref().on("value", function(snapshot) {
-    $("#nameDisplay").append(snapshot.val().employeeName);
-    console.log(snapshot.val()'is snapshot val')
-    $("#roleDisplay").append(snapshot.val().employeeRole);
-    $("#startDateDisplay").append(snapshot.val().employeeStartDate);
-    $("#monthlyRateDisplay").append(snapshot.val().employeeMonthlyRate)
+// Create new P element to append the information to
+// var newP = $("<p>");
+// newP = employeeName;
+// $("#nameDisplay").append(newP);
+
+database.ref().on("child_added", function(snapshot) {
+    console.log(snapshot.val())
+    $("#nameDisplay").append("<p>" + snapshot.val().employeeName + "</p>");
+    $("#roleDisplay").append("<p>" + snapshot.val().employeeRole + "</p>");
+    $("#startDateDisplay").append("<p>" + snapshot.val().employeeStartDate + "</p>");
+    $("#monthlyRateDisplay").append("<p>" + snapshot.val().employeeMonthlyRate + "</p>")
     });
