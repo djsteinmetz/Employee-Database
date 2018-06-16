@@ -6,6 +6,9 @@
     padding: 0px 10px 0px 10px;
 }
 
-.title {
-    background-color: lightgrey;
+p {
+    min-height: 24px;
 }
+/* .title {
+    text-decoration: underline;
+} */
